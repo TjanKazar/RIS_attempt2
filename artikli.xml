@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfArtikel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Artikel>
+    <id>2</id>
+    <naziv>naziv1</naziv>
+    <cena>51.049951799844100</cena>
+    <zaloga>5</zaloga>
+    <dobaviteljId>9</dobaviteljId>
+    <datumZadnjeNabave>2001-04-20T00:00:00</datumZadnjeNabave>
+  </Artikel>
+  <Artikel>
+    <id>14</id>
+    <naziv>naziv2</naziv>
+    <cena>86.856823067774100</cena>
+    <zaloga>8</zaloga>
+    <dobaviteljId>36</dobaviteljId>
+    <datumZadnjeNabave>2002-06-16T00:00:00</datumZadnjeNabave>
+  </Artikel>
+  <Artikel>
+    <id>27</id>
+    <naziv>naziv3</naziv>
+    <cena>1.7922488536820700</cena>
+    <zaloga>3</zaloga>
+    <dobaviteljId>45</dobaviteljId>
+    <datumZadnjeNabave>2003-04-07T00:00:00</datumZadnjeNabave>
+  </Artikel>
+  <Artikel>
+    <id>16</id>
+    <naziv>naziv4</naziv>
+    <cena>61.949802367971700</cena>
+    <zaloga>36</zaloga>
+    <dobaviteljId>5</dobaviteljId>
+    <datumZadnjeNabave>2004-01-15T00:00:00</datumZadnjeNabave>
+  </Artikel>
+  <Artikel>
+    <id>30</id>
+    <naziv>naziv5</naziv>
+    <cena>80.903322569015200</cena>
+    <zaloga>5</zaloga>
+    <dobaviteljId>36</dobaviteljId>
+    <datumZadnjeNabave>2005-04-11T00:00:00</datumZadnjeNabave>
+  </Artikel>
+</ArrayOfArtikel>
