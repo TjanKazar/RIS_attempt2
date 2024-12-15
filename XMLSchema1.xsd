@@ -1,8 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
-           elementFormDefault="qualified">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
 
-	<!-- Dobavitelj (Supplier) Complex Type Definition -->
 	<xs:complexType name="DobaviteljType">
 		<xs:sequence>
 			<xs:element name="id" type="DobaviteljIdType"/>
@@ -34,7 +32,6 @@
 		</xs:sequence>
 	</xs:complexType>
 
-	<!-- Artikel (Article/Product) Complex Type Definition -->
 	<xs:complexType name="ArtikelType">
 		<xs:sequence>
 			<xs:element name="id" type="ArtikelIdType"/>
@@ -49,11 +46,47 @@
 			<xs:element name="cena" type="CenaType"/>
 			<xs:element name="zaloga" type="ZalogaType"/>
 			<xs:element name="dobaviteljId" type="DobaviteljIdType"/>
-			<xs:element name="datumZadnjeNabave" type="xs:string"/>
+			<xs:element name="datumZadnjeNabave">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:pattern value="\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
 
-	<!-- Custom Simple Types with Validation -->
+	<xs:complexType name="AddressType">
+		<xs:simpleContent>
+			<xs:extension base="xs:string">
+				<xs:attribute name="country" type="xs:string" use="required"/>
+				<xs:attribute name="postalCode" use="required">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:pattern value="\d{4,5}"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+
+	<xs:complexType name="ExtendedArtikelType">
+		<xs:complexContent>
+			<xs:extension base="ArtikelType">
+				<xs:sequence>
+					<xs:element name="kategorija" minOccurs="0">
+						<xs:simpleType>
+							<xs:restriction base="xs:string">
+								<xs:pattern value="[A-Za-z ]{3,30}"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
 	<xs:simpleType name="DobaviteljIdType">
 		<xs:restriction base="xs:positiveInteger">
 			<xs:minInclusive value="1"/>
@@ -96,7 +129,6 @@
 		</xs:restriction>
 	</xs:simpleType>
 
-	<!-- Global Element Definitions -->
 	<xs:element name="ArrayOfDobavitelj">
 		<xs:complexType>
 			<xs:sequence>
@@ -108,8 +140,9 @@
 	<xs:element name="ArrayOfArtikel">
 		<xs:complexType>
 			<xs:sequence>
-				<xs:element name="Artikel" type="ArtikelType" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element name="Artikel" type="ExtendedArtikelType" minOccurs="0" maxOccurs="unbounded"/>
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
+
 </xs:schema>

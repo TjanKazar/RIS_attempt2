@@ -28,7 +28,7 @@ public class XmlValidator
 
 			using (XmlReader reader = XmlReader.Create(xmlFilePath, settings))
 			{
-				while (reader.Read()) { } // Read through entire document
+				while (reader.Read()) { } 
 			}
 
 			if (validationErrors.Count > 0)
@@ -121,7 +121,7 @@ public class XmlValidator
 		{
 			XDocument doc = XDocument.Load(dobaviteljiXmlPath);
 
-			XElement newDobaviteljElement = new XElement("Dobavitelj",
+			XElement newDobaviteljElement = new ("Dobavitelj",
 				new XElement("id", newDobavitelj.id),
 				new XElement("naziv", newDobavitelj.naziv),
 				new XElement("naslov", newDobavitelj.naslov),

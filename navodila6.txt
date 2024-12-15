@@ -1,0 +1,8 @@
+V sklopu svoje aplikacije s pomočjo XPath na konzolo smiselno izpišite naslednje informacije:
+
+Imena vseh artiklov
+Imena vse artiklov, katerih cena je več od izbranega pogoja
+Vsoto cen vseh artiklov
+Povprečno vrednost cen artiklov 
+...
+ Pri tem preglejte možnosti, ki jih ponuja XPath, in jih uporabite (vsaj 10 primerov).

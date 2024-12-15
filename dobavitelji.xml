@@ -1,42 +1,42 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ArrayOfDobavitelj xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Dobavitelj>
-    <id>226637</id>
+    <id>440132</id>
     <naziv>naziv1</naziv>
     <naslov>naslov1</naslov>
-    <davcnaSt>911539</davcnaSt>
+    <davcnaSt>677745</davcnaSt>
     <kontakt>kontakt1.nekaj@gmail.com</kontakt>
     <opis>opis1</opis>
   </Dobavitelj>
   <Dobavitelj>
-    <id>685719</id>
+    <id>845470</id>
     <naziv>naziv2</naziv>
     <naslov>naslov2</naslov>
-    <davcnaSt>287769</davcnaSt>
+    <davcnaSt>328383</davcnaSt>
     <kontakt>kontakt2.nekaj@gmail.com</kontakt>
     <opis>opis2</opis>
   </Dobavitelj>
   <Dobavitelj>
-    <id>227365</id>
+    <id>584900</id>
     <naziv>naziv3</naziv>
     <naslov>naslov3</naslov>
-    <davcnaSt>602299</davcnaSt>
+    <davcnaSt>489522</davcnaSt>
     <kontakt>kontakt3.nekaj@gmail.com</kontakt>
     <opis>opis3</opis>
   </Dobavitelj>
   <Dobavitelj>
-    <id>437283</id>
+    <id>186231</id>
     <naziv>naziv4</naziv>
     <naslov>naslov4</naslov>
-    <davcnaSt>298165</davcnaSt>
+    <davcnaSt>827721</davcnaSt>
     <kontakt>kontakt4.nekaj@gmail.com</kontakt>
     <opis>opis4</opis>
   </Dobavitelj>
   <Dobavitelj>
-    <id>450458</id>
+    <id>894457</id>
     <naziv>naziv5</naziv>
     <naslov>naslov5</naslov>
-    <davcnaSt>497667</davcnaSt>
+    <davcnaSt>387778</davcnaSt>
     <kontakt>kontakt5.nekaj@gmail.com</kontakt>
     <opis>opis5</opis>
   </Dobavitelj>

@@ -1,0 +1,12 @@
+4a) Definicija XML sheme
+
+Za vse XML dokumente kreirajte eno skupno XML shemo, ki bo vključevala vse potrebne elemente in atribute. Poskrbite za:
+
+definicijo globalnih in lokalnih elementov
+ustrezno kardinalnost
+obveznost elementov in atributov
+vrstni red elementov
+podatkovne tipe elementov in atributov
+4b) Validacija
+
+Obstoječo aplikacijo razširite in omogočite validacijo novih artiklov oziroma dobaviteljev s pomočjo XML sheme. V primeru napak preprečite vnos novih elementov in atributov, uporabnika opozorite o vrsti napake.

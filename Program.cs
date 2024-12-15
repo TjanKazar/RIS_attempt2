@@ -104,7 +104,6 @@ static void cwList<T>(List<T> list)
 
 	foreach (var item in list)
 	{
-		// For each item, print its properties
 		foreach (var prop in typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance))
 		{
 			var value = prop.GetValue(item);
@@ -118,6 +117,8 @@ string dobaviteljPathRelative = "dobavitelji.xml";
 string artikelPathRelative = "artikli.xml";
 
 string basePath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, @"..\..\..\"));
+
+
 // Main
 List <Dobavitelj> dobavitelji = generateDummyData<Dobavitelj>(5);
 SerializeToXml(dobavitelji, "dobavitelji.xml");
@@ -130,43 +131,37 @@ cwList(artikelFromXml);
 
 string schemaPath = Path.Combine(AppContext.BaseDirectory, @"..\..\..\XMLSchema1.xsd");
 
-// Paths to XML files
 string artikliXmlPath = Path.Combine(AppContext.BaseDirectory, @"..\..\..\artikli.xml");
 string dobaviteljiXmlPath = Path.Combine(AppContext.BaseDirectory, @"..\..\..\dobavitelji.xml");
 
-// Create validation service
 XmlValidator validationService = new XmlValidator(schemaPath);
 
-// Validate existing XML documents
 bool artikliValid = validationService.ValidateXmlDocument(artikliXmlPath, "Artikli XML");
 bool dobaviteljiValid = validationService.ValidateXmlDocument(dobaviteljiXmlPath, "Dobavitelji XML");
 
-// Example of adding new elements with validation
 if (artikliValid && dobaviteljiValid)
 {
-	// Example new Artikel (make sure to use valid data)
 	List<int> dobaviteljiId = getDobaviteljId();
 	Random random = new();
 	Artikel newArtikel = new Artikel(
-		random.Next(10000, 999999),                    // id
-		"asdf",          // naziv
-		99.99m,                 // cena
-		50,                     // zaloga
-		dobaviteljiId[3],       // dobaviteljId (must exist in dobavitelji.xml)
-		DateTime.Now           // datumZadnjeNabave
+		random.Next(10000, 999999),
+		"asdf",          
+		99.99m,                 
+		50,                     
+		dobaviteljiId[3],       
+		new DateTime(2022, random.Next(1, 12), random.Next(1, 28))        
 	);
 
 	// Example new Dobavitelj
 	Dobavitelj newDobavitelj = new Dobavitelj(
-		100,                    // id
-		"Nov Dobavitelj",       // naziv
-		"Nov Naslov",           // naslov
-		123456,                 // davcnaSt
-		"nov.kontak@gmail.com", // kontakt
-		"Opis novega dobavitelja" // opis
+		100,                    
+		"Nov Dobavitelj",       
+		"Nov Naslov",           
+		123456,                 
+		"nov.kontak@gmail.com", 
+		"Opis novega dobavitelja" 
 	);
 
-	// Attempt to add new elements
 	bool artikelAdded = validationService.AddNewArtikel(newArtikel, artikliXmlPath);
 	bool dobaviteljAdded = validationService.AddNewDobavitelj(newDobavitelj, dobaviteljiXmlPath);
 }
