@@ -1,11 +1,14 @@
 ﻿using RIS;
 using System;
+using System.Diagnostics;
 using System.Linq.Expressions;
 using System.Net.WebSockets;
 using System.Reflection;
 using System.Security.Principal;
+using System.Xml;
 using System.Xml.Serialization;
 using System.Xml.XPath;
+using System.Xml.Xsl;
 
 static List<T> generateDummyData<T>(int count) where T : new()
 {
@@ -172,6 +175,10 @@ if (artikliValid && dobaviteljiValid)
 	// naloga 6
 
 
+	Console.WriteLine("-----------------------------------");
+    Console.WriteLine("poizvedbe za nalogo 6 ");
+	Console.WriteLine("-----------------------------------");
+
 	XPathNavigator Anav;
 	XPathNavigator Dnav;
 	XPathDocument ArtikelNav;
@@ -270,5 +277,24 @@ if (artikliValid && dobaviteljiValid)
 	Console.WriteLine("Skupno število artiklov: " + Anav.Evaluate(totalArtikelCountExpression));
 
 
+
+	// naloga 7
+
+	XslCompiledTransform myXslTrans = new XslCompiledTransform();
+	XmlTextWriter writer = new XmlTextWriter(@"Artikli.html", null);
+
+	myXslTrans.Load(@"../../../ArtikelTransformacija.xslt");
+	myXslTrans.Transform(ArtikelNav, null, writer);
+
+	writer.Flush();
+	writer.Close();
+
+	ProcessStartInfo startInfo = new ProcessStartInfo
+	{
+		FileName = "Artikli.html",
+		UseShellExecute = true 
+	};
+	Process process = Process.Start(startInfo);
+	process.WaitForExit();
 
 }
