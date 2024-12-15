@@ -1,4 +1,5 @@
 ﻿using RIS;
+using System;
 using System.Net.WebSockets;
 using System.Reflection;
 using System.Xml.Serialization;
@@ -12,10 +13,18 @@ static List<T> generateDummyData<T>(int count) where T : new()
 	{
 
 		T instance = new T();
+
 		foreach (var prop in typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance))
 		{
-			if (!prop.CanWrite) continue;
+		if (typeof(T) == typeof(Artikel))
+		{
+			if (prop.Name == "naziv")
+				prop.SetValue(instance, $"Naziv{i}");
+			else if (prop.Name == "id")
+				prop.SetValue(instance, i);
+		}
 
+			if (!prop.CanWrite) continue;
 
 			if (typeof(T) == typeof(Artikel) && prop.Name == "dobaviteljId")
 			{
@@ -26,23 +35,29 @@ static List<T> generateDummyData<T>(int count) where T : new()
 			}
 			else if (prop.PropertyType == typeof(int))
 			{
-				prop.SetValue(instance, i * random.Next(1, 10));
+				prop.SetValue(instance, random.Next(10000, 999999));
 			}
 			else if (prop.PropertyType == typeof(string))
 			{
 				prop.SetValue(instance, $"{prop.Name}{i}");
+				if (prop.Name.ToLower() == "kontakt")
+					prop.SetValue(instance, $"{prop.Name}{i}.nekaj@gmail.com");
 			}
 			else if (prop.PropertyType == typeof(double))
 			{
-				prop.SetValue(instance, random.NextDouble() * 100);
+				prop.SetValue(instance, Math.Round(random.NextDouble() * 100, 2));
 			}
 			else if (prop.PropertyType == typeof(decimal))
 			{
-				prop.SetValue(instance, (decimal)random.NextDouble() * 100);
+				prop.SetValue(instance, Math.Round((decimal)random.NextDouble() * 100, 2));
 			}
 			else if (prop.PropertyType == typeof(DateTime))
 			{
 				prop.SetValue(instance, new DateTime(2000 + i, random.Next(1, 12), random.Next(1, 28)));
+			}
+			else if (prop.PropertyType == typeof(DateOnly))
+			{
+				prop.SetValue(instance, new DateOnly(2000 + i, random.Next(1, 12), random.Next(1, 28)));
 			}
 			else if (prop.PropertyType == typeof(bool))
 			{
@@ -63,7 +78,6 @@ static void SerializeToXml<T>(List<T> list, string RelativePath)
 	{
 		serializer.Serialize(fs, list);
 	}
-
 	Console.WriteLine($"List serialized to {RelativePath}");
 }
 static T DeserializeFromXml<T>(string filePath)
@@ -83,7 +97,6 @@ static List<int> getDobaviteljId()
 		list.Add(d.id);
 	return list;
 }
-
 static void cwList<T>(List<T> list)
 {
 	Console.WriteLine($"List of type: {typeof(T)}");
@@ -107,11 +120,53 @@ string artikelPathRelative = "artikli.xml";
 string basePath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, @"..\..\..\"));
 // Main
 List <Dobavitelj> dobavitelji = generateDummyData<Dobavitelj>(5);
-SerializeToXml<Dobavitelj>(dobavitelji, "dobavitelji.xml");
+SerializeToXml(dobavitelji, "dobavitelji.xml");
 List<Artikel> artikili = generateDummyData<Artikel>(5);
-SerializeToXml<Artikel>(artikili, "artikli.xml");
+SerializeToXml(artikili, "artikli.xml");
 List<Dobavitelj> dobaviteljFromXml = DeserializeFromXml<List<Dobavitelj>>(Path.Combine(basePath, dobaviteljPathRelative));
 List<Artikel> artikelFromXml = DeserializeFromXml<List<Artikel>>(Path.Combine(basePath, artikelPathRelative));
 cwList(dobaviteljFromXml);
 cwList(artikelFromXml);
 
+string schemaPath = Path.Combine(AppContext.BaseDirectory, @"..\..\..\XMLSchema1.xsd");
+
+// Paths to XML files
+string artikliXmlPath = Path.Combine(AppContext.BaseDirectory, @"..\..\..\artikli.xml");
+string dobaviteljiXmlPath = Path.Combine(AppContext.BaseDirectory, @"..\..\..\dobavitelji.xml");
+
+// Create validation service
+XmlValidator validationService = new XmlValidator(schemaPath);
+
+// Validate existing XML documents
+bool artikliValid = validationService.ValidateXmlDocument(artikliXmlPath, "Artikli XML");
+bool dobaviteljiValid = validationService.ValidateXmlDocument(dobaviteljiXmlPath, "Dobavitelji XML");
+
+// Example of adding new elements with validation
+if (artikliValid && dobaviteljiValid)
+{
+	// Example new Artikel (make sure to use valid data)
+	List<int> dobaviteljiId = getDobaviteljId();
+	Random random = new();
+	Artikel newArtikel = new Artikel(
+		random.Next(10000, 999999),                    // id
+		"asdf",          // naziv
+		99.99m,                 // cena
+		50,                     // zaloga
+		dobaviteljiId[3],       // dobaviteljId (must exist in dobavitelji.xml)
+		DateTime.Now           // datumZadnjeNabave
+	);
+
+	// Example new Dobavitelj
+	Dobavitelj newDobavitelj = new Dobavitelj(
+		100,                    // id
+		"Nov Dobavitelj",       // naziv
+		"Nov Naslov",           // naslov
+		123456,                 // davcnaSt
+		"nov.kontak@gmail.com", // kontakt
+		"Opis novega dobavitelja" // opis
+	);
+
+	// Attempt to add new elements
+	bool artikelAdded = validationService.AddNewArtikel(newArtikel, artikliXmlPath);
+	bool dobaviteljAdded = validationService.AddNewDobavitelj(newDobavitelj, dobaviteljiXmlPath);
+}

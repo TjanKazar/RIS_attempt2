@@ -1,0 +1,115 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           elementFormDefault="qualified">
+
+	<!-- Dobavitelj (Supplier) Complex Type Definition -->
+	<xs:complexType name="DobaviteljType">
+		<xs:sequence>
+			<xs:element name="id" type="DobaviteljIdType"/>
+			<xs:element name="naziv">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="1"/>
+						<xs:maxLength value="100"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="naslov">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="1"/>
+						<xs:maxLength value="200"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="davcnaSt" type="DavcnaStType"/>
+			<xs:element name="kontakt" type="KontaktType"/>
+			<xs:element name="opis" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="500"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<!-- Artikel (Article/Product) Complex Type Definition -->
+	<xs:complexType name="ArtikelType">
+		<xs:sequence>
+			<xs:element name="id" type="ArtikelIdType"/>
+			<xs:element name="naziv">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="1"/>
+						<xs:maxLength value="100"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="cena" type="CenaType"/>
+			<xs:element name="zaloga" type="ZalogaType"/>
+			<xs:element name="dobaviteljId" type="DobaviteljIdType"/>
+			<xs:element name="datumZadnjeNabave" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<!-- Custom Simple Types with Validation -->
+	<xs:simpleType name="DobaviteljIdType">
+		<xs:restriction base="xs:positiveInteger">
+			<xs:minInclusive value="1"/>
+			<xs:maxInclusive value="999999"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="ArtikelIdType">
+		<xs:restriction base="xs:positiveInteger">
+			<xs:minInclusive value="1"/>
+			<xs:maxInclusive value="9999999"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="DavcnaStType">
+		<xs:restriction base="xs:positiveInteger">
+			<xs:minInclusive value="10000"/>
+			<xs:maxInclusive value="999999"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="CenaType">
+		<xs:restriction base="xs:decimal">
+			<xs:minInclusive value="0"/>
+			<xs:fractionDigits value="2"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="ZalogaType">
+		<xs:restriction base="xs:nonNegativeInteger">
+			<xs:maxInclusive value="1000000"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="KontaktType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="5"/>
+			<xs:maxLength value="100"/>
+			<xs:pattern value="[^@]+@[^\.]+\..+"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!-- Global Element Definitions -->
+	<xs:element name="ArrayOfDobavitelj">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Dobavitelj" type="DobaviteljType" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="ArrayOfArtikel">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Artikel" type="ArtikelType" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>
