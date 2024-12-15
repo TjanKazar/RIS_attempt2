@@ -1,51 +1,51 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ArrayOfArtikel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Artikel>
-    <id>99669</id>
+    <id>767629</id>
     <naziv>naziv1</naziv>
-    <cena>90.96</cena>
-    <zaloga>678537</zaloga>
-    <dobaviteljId>584900</dobaviteljId>
-    <datumZadnjeNabave>2001-10-25T00:00:00</datumZadnjeNabave>
+    <cena>23.43</cena>
+    <zaloga>114757</zaloga>
+    <dobaviteljId>44636</dobaviteljId>
+    <datumZadnjeNabave>2001-06-12T00:00:00</datumZadnjeNabave>
   </Artikel>
   <Artikel>
-    <id>799027</id>
+    <id>475736</id>
     <naziv>naziv2</naziv>
-    <cena>63.11</cena>
-    <zaloga>416531</zaloga>
-    <dobaviteljId>894457</dobaviteljId>
-    <datumZadnjeNabave>2002-10-01T00:00:00</datumZadnjeNabave>
+    <cena>48.16</cena>
+    <zaloga>272921</zaloga>
+    <dobaviteljId>44636</dobaviteljId>
+    <datumZadnjeNabave>2002-02-07T00:00:00</datumZadnjeNabave>
   </Artikel>
   <Artikel>
-    <id>222425</id>
+    <id>351144</id>
     <naziv>naziv3</naziv>
-    <cena>84.99</cena>
-    <zaloga>651146</zaloga>
-    <dobaviteljId>186231</dobaviteljId>
-    <datumZadnjeNabave>2003-01-21T00:00:00</datumZadnjeNabave>
+    <cena>94.19</cena>
+    <zaloga>911685</zaloga>
+    <dobaviteljId>696462</dobaviteljId>
+    <datumZadnjeNabave>2003-11-02T00:00:00</datumZadnjeNabave>
   </Artikel>
   <Artikel>
-    <id>170174</id>
+    <id>24927</id>
     <naziv>naziv4</naziv>
-    <cena>86.32</cena>
-    <zaloga>656018</zaloga>
-    <dobaviteljId>894457</dobaviteljId>
-    <datumZadnjeNabave>2004-09-03T00:00:00</datumZadnjeNabave>
+    <cena>54.85</cena>
+    <zaloga>95392</zaloga>
+    <dobaviteljId>696462</dobaviteljId>
+    <datumZadnjeNabave>2004-08-05T00:00:00</datumZadnjeNabave>
   </Artikel>
   <Artikel>
-    <id>679930</id>
+    <id>404077</id>
     <naziv>naziv5</naziv>
-    <cena>40.83</cena>
-    <zaloga>33161</zaloga>
-    <dobaviteljId>186231</dobaviteljId>
-    <datumZadnjeNabave>2005-03-10T00:00:00</datumZadnjeNabave>
+    <cena>67.80</cena>
+    <zaloga>641110</zaloga>
+    <dobaviteljId>44636</dobaviteljId>
+    <datumZadnjeNabave>2005-03-16T00:00:00</datumZadnjeNabave>
   </Artikel>
   <Artikel>
-    <id>491735</id>
+    <id>716745</id>
     <naziv>asdf</naziv>
     <cena>99.99</cena>
-    <zaloga>50</zaloga>
-    <dobaviteljId>186231</dobaviteljId>
-    <datumZadnjeNabave>2022-04-06T00:00:00</datumZadnjeNabave>
+    <zaloga>9</zaloga>
+    <dobaviteljId>467533</dobaviteljId>
+    <datumZadnjeNabave>2022-08-16T00:00:00</datumZadnjeNabave>
   </Artikel>
 </ArrayOfArtikel>

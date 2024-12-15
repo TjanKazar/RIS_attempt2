@@ -1,8 +1,11 @@
 ﻿using RIS;
 using System;
+using System.Linq.Expressions;
 using System.Net.WebSockets;
 using System.Reflection;
+using System.Security.Principal;
 using System.Xml.Serialization;
+using System.Xml.XPath;
 
 static List<T> generateDummyData<T>(int count) where T : new()
 {
@@ -147,7 +150,7 @@ if (artikliValid && dobaviteljiValid)
 		random.Next(10000, 999999),
 		"asdf",          
 		99.99m,                 
-		50,                     
+		9,                     
 		dobaviteljiId[3],       
 		new DateTime(2022, random.Next(1, 12), random.Next(1, 28))        
 	);
@@ -164,4 +167,108 @@ if (artikliValid && dobaviteljiValid)
 
 	bool artikelAdded = validationService.AddNewArtikel(newArtikel, artikliXmlPath);
 	bool dobaviteljAdded = validationService.AddNewDobavitelj(newDobavitelj, dobaviteljiXmlPath);
+
+
+	// naloga 6
+
+
+	XPathNavigator Anav;
+	XPathNavigator Dnav;
+	XPathDocument ArtikelNav;
+	XPathDocument DobaviteljNav;
+	XPathNodeIterator NodeIter;
+
+	ArtikelNav = new XPathDocument(artikliXmlPath);
+	DobaviteljNav = new XPathDocument(dobaviteljiXmlPath);
+
+	Dnav = DobaviteljNav.CreateNavigator();
+	Anav = ArtikelNav.CreateNavigator();
+
+
+
+	// poveprečna cena artikla
+
+	string artikelPriceExpression = "sum(/ArrayOfArtikel/Artikel/cena) div count(/ArrayOfArtikel/Artikel)";
+
+
+	//vsi artikli
+	string allArtikelExpresssion = "/ArrayOfArtikel/Artikel/naziv";
+
+	NodeIter = Anav.Select(allArtikelExpresssion);
+    Console.WriteLine("vsi nazivi artiklov: ");
+	while (NodeIter.MoveNext())
+        Console.WriteLine("naziv: " + NodeIter.Current.Value);
+
+	//vsi Dobavitelji
+	string allDobaviteljExpresssion = "/ArrayOfDobavitelj/Dobavitelj/naziv";
+
+	NodeIter = Dnav.Select(allDobaviteljExpresssion);
+	Console.WriteLine("vsi nazivi Dobaviteljev: ");
+	while (NodeIter.MoveNext())
+		Console.WriteLine("naziv: " + NodeIter.Current.Value);
+
+	// cena na 50.00
+	string above50Expression = "/ArrayOfArtikel/Artikel/naziv[../cena>50.00]";
+	Console.WriteLine("povprečna cena artikla je {0}", Anav.Evaluate(artikelPriceExpression));
+
+	NodeIter = Anav.Select(above50Expression);
+    Console.WriteLine("vsi artikili z ceno višjo od 50 EUR so : ");
+
+	while (NodeIter.MoveNext())
+		Console.WriteLine("Naziv artikla: {0}", NodeIter.Current.Value);
+
+
+	//izpis artikla z id = 1
+
+	string id1Expression = "/ArrayOfArtikel/Artikel/naziv[../id=1]";
+
+	NodeIter = Anav.Select(id1Expression);
+    Console.WriteLine("artikel na id = 1: ");
+	while (NodeIter.MoveNext())
+        Console.WriteLine("Naziv Artikla : {0}", NodeIter.Current.Value);
+
+	//izpis artikla z id = 1
+
+	string id1ExpressionDobavitelj = "/ArrayOfDobavitelj/Dobavitelj/naziv[../id=1]";
+
+	NodeIter = Dnav.Select(id1ExpressionDobavitelj);
+	Console.WriteLine("dobavitelj na id = 1: ");
+	while (NodeIter.MoveNext())
+		Console.WriteLine("Naziv Artikla : {0}", NodeIter.Current.Value);
+
+
+	// preverjanje, če je zaloga prazna
+
+	string zeroStockExpression = "boolean(/ArrayOfArtikel/Artikel[zaloga=0])";
+	bool hasZeroStock = (bool)Anav.Evaluate(zeroStockExpression);
+	Console.WriteLine(hasZeroStock
+		? "Obstajajo artikli brez zaloge."
+		: "Vsi artikli imajo zalogo.");
+
+	string totalPriceExpression = "sum(/ArrayOfArtikel/Artikel/cena)";
+    Console.WriteLine("Cena vseh artiklov skupaj : " + Anav.Evaluate(totalPriceExpression));
+
+	// dobavitelj z davčno = 123456
+
+	string davcna123456Expression = "/ArrayOfDobavitelj/Dobavitelj/naziv[../davcnaSt=123456]";
+	NodeIter = Dnav.Select(davcna123456Expression);
+    Console.WriteLine("Dobavitelj z davčno številko enako 123456: ");
+	while (NodeIter.MoveNext())
+		Console.WriteLine("Dobavitelj z nazivom : " + NodeIter.Current.Value);
+
+	// nizka zaloga : 
+
+	string lowStockIdsExpression = "/ArrayOfArtikel/Artikel/id[../zaloga < 10]";
+	NodeIter = Anav.Select(lowStockIdsExpression);
+	Console.WriteLine("Artikli z zalogo manj kot 10:");
+	while (NodeIter.MoveNext())
+		Console.WriteLine("ID artikla: " + NodeIter.Current.Value);
+
+	//stevilo artiklov : 
+
+	string totalArtikelCountExpression = "count(/ArrayOfArtikel/Artikel)";
+	Console.WriteLine("Skupno število artiklov: " + Anav.Evaluate(totalArtikelCountExpression));
+
+
+
 }
