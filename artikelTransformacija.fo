@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fo:root xmlns:fo="http://www.w3.org/1999/XSL/Format">
+  <fo:layout-master-set>
+    <fo:simple-page-master master-name="default">
+      <fo:region-body margin="1in"/>
+      <fo:region-after extent="0.5in"/>
+    </fo:simple-page-master>
+  </fo:layout-master-set>
+  <fo:page-sequence master-reference="default">
+    <fo:flow flow-name="xsl-region-body">
+      <fo:block font-family="Arial" font-size="12pt" font-weight="bold" text-align="center">
+        Artikli List
+      </fo:block>
+      <fo:table border-collapse="separate" border-spacing="2pt">
+        <fo:table-column column-width="3cm"/>
+        <fo:table-column column-width="6cm"/>
+        <fo:table-column column-width="3cm"/>
+        <fo:table-header>
+          <fo:table-row>
+            <fo:table-cell>
+              <fo:block>ID</fo:block>
+            </fo:table-cell>
+            <fo:table-cell>
+              <fo:block>Name</fo:block>
+            </fo:table-cell>
+            <fo:table-cell>
+              <fo:block>Price</fo:block>
+            </fo:table-cell>
+          </fo:table-row>
+        </fo:table-header>
+        <fo:table-body>
+          <xsl:for-each select="/ArrayOfArtikel/Artikel">
+            <fo:table-row>
+              <fo:table-cell>
+                <fo:block><xsl:value-of select="id"/></fo:block>
+              </fo:table-cell>
+              <fo:table-cell>
+                <fo:block><xsl:value-of select="naziv"/></fo:block>
+              </fo:table-cell>
+              <fo:table-cell>
+                <fo:block><xsl:value-of select="cena"/></fo:block>
+              </fo:table-cell>
+            </fo:table-row>
+          </xsl:for-each>
+        </fo:table-body>
+      </fo:table>
+    </fo:flow>
+  </fo:page-sequence>
+</fo:root>

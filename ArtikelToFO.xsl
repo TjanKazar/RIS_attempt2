@@ -1,10 +1,8 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
 
-	<!-- Define output method -->
 	<xsl:output method="html" encoding="UTF-8" />
 
-	<!-- Main template -->
 	<xsl:template match="/">
 		<html>
 			<head>
@@ -27,7 +25,6 @@
 			<body>
 				<h1>Seznam Artiklov</h1>
 
-				<!-- Calculate the maximum cena -->
 				<xsl:variable name="maxCena">
 					<xsl:for-each select="ArrayOfArtikel/Artikel">
 						<xsl:if test="not(preceding-sibling::Artikel/cena &gt; cena)">
@@ -38,7 +35,6 @@
 					</xsl:for-each>
 				</xsl:variable>
 
-				<!-- Calculate the minimum cena -->
 				<xsl:variable name="minCena">
 					<xsl:for-each select="ArrayOfArtikel/Artikel">
 						<xsl:if test="not(preceding-sibling::Artikel/cena &lt; cena)">
@@ -49,7 +45,6 @@
 					</xsl:for-each>
 				</xsl:variable>
 
-				<!-- Display the table -->
 				<table>
 					<tr>
 						<th>ID</th>
@@ -60,7 +55,6 @@
 						<th>Datum Zadnje Nabave</th>
 					</tr>
 
-					<!-- Iterate through all Artikel elements -->
 					<xsl:for-each select="ArrayOfArtikel/Artikel">
 						<tr>
 							<td>
@@ -70,7 +64,6 @@
 								<xsl:value-of select="naziv" />
 							</td>
 							<td>
-								<!-- Apply conditional formatting to Cena -->
 								<xsl:choose>
 									<xsl:when test="cena = $maxCena">
 										<td style="background-color: red; color: white;">
